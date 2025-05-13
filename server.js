@@ -28,16 +28,18 @@ app.post("/trips", async (req, res) => {
   }
 
   try {
-    const trip = await prisma.trip.create({
-      data: {
-        destination,
-        starts_at: new Date(starts_at),
-        ends_at: new Date(ends_at),
-        emails_to_invite: JSON.stringify(emails_to_invite),
-        owner_name,
-        owner_email,
-      },
-    });
+    const trip = await console.log(
+      prisma.trip.create({
+        data: {
+          destination,
+          starts_at: new Date(starts_at),
+          ends_at: new Date(ends_at),
+          emails_to_invite: JSON.stringify(emails_to_invite),
+          owner_name,
+          owner_email,
+        },
+      })
+    );
 
     res.status(201).json(trip);
   } catch (error) {
@@ -82,7 +84,7 @@ app.get("/trips/:id/participants", async (req, res) => {
 
   try {
     const participants = await prisma.participant.findMany({
-      where: { tripId: parseInt(id) },
+      where: { tripId: id },
     });
 
     if (participants.length === 0) {
